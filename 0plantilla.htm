@@ -1,0 +1,33 @@
+<html>
+
+
+   <head>
+
+      <title>
+
+         P&aacute;gina con Javascript.
+
+      </title>
+
+      <script language="javascript">
+        function longitud()
+        {
+            var nombre = document.getElementById("nombre").value;
+            alert ("la longitud es "+ nombre.length);
+            var n_mayus = nombre.toUpperCase();
+            console.log ("N_MAYUS = " + n_mayus);
+        }
+
+
+      </script>
+
+   </head>
+
+   <body>
+       <h4>Pon tu nombre</h4>
+        <input type="text" id="nombre">
+        <button type="button" name="OK" onclick="longitud()">OK</button>
+    
+   </body>
+
+</html>
