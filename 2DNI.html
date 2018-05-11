@@ -1,0 +1,30 @@
+<html>
+   <head>
+      <title>
+         WEB CON JS
+      </title>
+      <script language="javascript">
+          const M = "TRWAGMYFPDXBNJZSQVHLCKE";// las constantes se declaran fuera del ámbito local
+         function letraDNI ()
+         {
+             var cadenaDNI = document.getElementById("DNI").value;//coge el valor de la caja de la pagina HTML
+             var numeroDNI = parseInt (cadenaDNI);//convierte el valor de la caja en número
+             if (isNaN(numeroDNI)) {//comprueba que es un número 
+                 alert ("Mete sólo un número");//en caso de que no sea un número
+             } else {
+                var resto = numeroDNI%M.length;//el resto es el número dividido por 23 que es la longitud del string de la constante M
+                var letraDNI = M.charAt(resto);//coge el valor de la posición del resto en la cadena
+                console.log("Su letra es " + letraDNI);//muestra el resultado que es la letra 
+                document.getElementById("letraDNI").value=letraDNI;
+             }
+         }
+      </script>
+   </head>
+   <body>
+       <label for="DNI">NÚMERO</label><br>
+       <br><input type="text" id="DNI"><!-- esta es la caja de texto que recoge el numero -->
+       <br><button onclick="letraDNI();">Dale</button><!-- envía el contenido  de la caja -->
+       <br><br><label for="letraDNI">LETRA</label>
+       <br><input type="text" id="letraDNI" size="1">
+    </body>
+</html>
