@@ -1,0 +1,72 @@
+<html>
+
+
+   <head>
+
+      <title>
+
+         P&aacute;gina con Javascript.
+
+      </title>
+
+      <script language="javascript">
+
+        function imc(peso,altura)
+        {
+            var imc= 0;
+            imc = peso / ( altura * altura );
+            return imc;
+        }
+
+        function calcularIMC()
+        {
+            alert ("Ha hecho click en el botón para averiguar su IMC");
+            var peso = document.getElementById("peso").value;
+            var altura = document.getElementById("altura").value;
+            var imcnumerico = imc(parsefloat(peso), parsefloat(altura));
+            var imcstring = imcnominal(imcnumerico);
+            alert ("IMCS" + imcstring + " " + imcnumerico);
+            document.getElementById ("res").src = "ideal.jpg";
+
+            
+        }
+        function imcnominal(imcnumerico)
+        {
+            var str_imc="";
+
+            if (imcnumerico < 16) {
+                var str_imc = 'desnutrido';
+            } else {
+                if (imcnumerico >= 16 && imcnumerico < 18) {
+                    var str_imc = 'delgado';
+                } else {
+                    if (imcnumerico >= 18 && imcnumerico < 25) {
+                        var str_imc = 'ideal';
+                    } else {
+                        if (imcnumerico >= 25 && imcnumerico < 31) {
+                            var str_imc = 'sobrepeso';
+                        } else {
+                            var str_imc = 'obeso';
+                        }
+                    }
+                }
+            }
+            return str_imc; 
+        }
+
+
+      </script>
+
+   </head>
+
+   <body>
+       <h4>Pon tu peso</h4>
+        <input type="text" id="peso"><br><br>
+        <input type="text" id="altura"><br><br>
+        <button onclick="calcularIMC();">Calcular IMC</button><br><br>
+        <img id= "res"></img>
+       
+    
+   </body>
+
+</html>
