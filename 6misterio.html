@@ -1,0 +1,60 @@
+<html>
+
+<head>
+    <title>
+        ADIVINA adivinanza
+    </title>
+    <!--
+ *
+ *El código de esta clase, es un poco misterioso. Algún programador Clase "C", no ha usado
+ *nombres descriptivos y ahora, nos toca pegarnos y descubrir qué narices hace este código, 
+ *para poder usarlo en nuestro proyecto.
+ *
+ *
+ *Se pide:
+ *
+ *1) Adivinar la funcionalidad del método adivinaQueHace
+ *2) Una vez descubierto, aplicar un nombre apropiado al método
+ *3) Idear un método equivalente, pero distinto. Es decir, crear un método 
+ *que haga lo mismo que adivinaQueHace, pero de otra manera.
+ *4) EXTRA: Sólo si resolviste los puntos anteriores, implementa una versión recursiva
+-->
+    <script language="javascript">
+        //Es Palíndromo
+
+        function esPalindromo() {
+            
+            var cadena = document.getElementById("palabra").value;
+            var mensaje= "";
+            var x = cadena.length -1;
+            var y = 0;
+            var igual= true;
+
+            while ((y < x) && (igual)){
+
+                //igual = cadena.charAt (y == cad.charAt);
+                if (cadena.charAt(y) == cadena.charAt(x))
+                {
+                    igual=true;
+                }else
+                {
+                    igual=false;
+                }
+                y++;
+                x--;
+            }
+            return igual;
+            mensaje = flag ? "SI" : "NO";
+            document.getElementById("p1").innerHTML="La palabra es "+ mensaje + " un palíndromo";
+
+        }
+    </script>
+</head>
+
+<body>
+    <label for="palabra">PALABRA</label>
+    <input type="text" id="palabra">
+    <button onclick="esPalindromo();">Empieza</button>
+</body>
+
+</html>

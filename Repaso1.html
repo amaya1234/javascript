@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+
+   <head>
+
+      <title>
+
+         P&aacute;gina con Javascript.
+
+      </title>
+
+      <script language="javascript">
+        function comparar()
+        {
+            var frase = document.getElementById("frase").value;
+            var letra = document.getElementById("letra").value;
+            var siono ;
+
+            if(frase.includes(letra))
+            {
+                siono= "si";
+            }else
+            {
+                siono="no";
+            }
+            alert ("la letra: "+ letra + " " + siono + " está en: " + frase);
+        }
+
+
+      </script>
+
+   </head>
+
+   <body>
+       <h4>Ecribe una frase o palabra</h4>
+        <input type="text" id="frase">
+        <h4>Ecribe una letra</h4>
+        <input type="text" id="letra"><br>
+        <button type="button" name="OK" onclick="comparar();">OK</button>
+    
+   </body>
+
+</html>
