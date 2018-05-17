@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+   <head>
+
+      <title>
+
+         P&aacute;gina con Javascript.
+
+      </title>
+
+      <script language="javascript">
+          //HACER UNA PÁGINA QUE RECIBA INTRODUCIR UNA PALABRA Y MUESTRE UN ALERT CON LA PALABRA AL REVÉS 
+          function invertirCadena() {
+            
+            var cadena = document.getElementById("palabra").value;
+            var cadenaInvertida ="";
+            var x = cadena.length-1;
+            var igual=true;
+
+            while ((x>=0) && (igual=true)) {
+                cadenaInvertida= cadenaInvertida + cadena.charAt(x);
+                x--;
+            }
+            cadena == cadenaInvertida ? igual=true : igual=false ;
+            
+            alert (cadenaInvertida);
+            
+        }
+       
+    </script>
+</head>
+
+<body>
+    <label for="palabra">PALABRA</label>
+    <input type="text" id="palabra">
+    <button onclick="invertirCadena();">Empieza</button>
+</body>
+
+</html>

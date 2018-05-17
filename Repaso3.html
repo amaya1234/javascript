@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+
+
+   <head>
+
+      <title>
+
+         P&aacute;gina con Javascript.
+
+      </title>
+
+      <script language="javascript">
+          //HACER UNA PÁGINA QUE DADO UN NÚMERO, DIGA SI ES PAR O NO
+        function comparar()
+        {
+            var numero = document.getElementById("numero").value;
+            
+            var siono ;
+
+            if(numero%2 == 0)
+            {
+                siono= "si es PAR";
+                
+            }else
+            {
+                siono="no es PAR";
+                
+            }
+            alert (" El numero que has puesto "+ siono);
+        }
+        
+
+      </script>
+
+   </head>
+
+   <body>
+        <h4>Ecribe un número</h4>
+        <input type="text" id="numero">
+        <button type="button" name="OK" onclick="comparar();">OK</button>
+    
+   </body>
+
+</html>

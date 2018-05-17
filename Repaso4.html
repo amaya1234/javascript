@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+   <head>
+
+      <title>
+
+         P&aacute;gina con Javascript.
+
+      </title>
+
+      <script language="javascript">
+          //HACER UNA PÁGINA QUE LE PIDA AL USUARIO SU EDAD Y LE DIGA SI ES MAYOR DE EDAD O NO 
+
+        function comparar()
+        {
+            var edad = document.getElementById("edad").value;
+            
+            var siono ;
+
+            if(edad >= 18)
+            {
+                siono= "si eres Mayor de Edad";
+                
+            }else
+            {
+                siono="no eres Mayor de Edad";
+                
+            }
+            alert (" Según tu edad "+ siono);
+        }
+        
+
+      </script>
+
+   </head>
+
+   <body>
+        <h4>Ecribe tu edad</h4>
+        <input type="text" id="edad">
+        <button type="button" name="OK" onclick="comparar();">OK</button>
+    
+   </body>
+
+</html>

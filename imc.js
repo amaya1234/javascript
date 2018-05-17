@@ -1,0 +1,1 @@
+//Definir un constructor de persona con los atributos necesarios para poder usarlo en el ejemplo del 3imc.html
