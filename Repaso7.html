@@ -12,26 +12,22 @@
           //HACER UN PROGRAMA QUE MUESTRE ALERTS EN LA SECUENCIA 3, 6, 9, 12, 15 ...99
         function hacer()
         {
-            var num = 
-            if( == num%3=0)
-            {
-                alert ("  " );
-            }
-        
-        
-
             
+            for( var num=3; num <=99 ; num=num+3)
+            {
+                
+                alert (" Este alert muestra el número: "+ num );
+            }
         }
-        
 
       </script>
 
    </head>
 
    <body>
-        <h4>Ecribe tres números y te digo cuál es mayor.</h4>
-        <input type="text" id="num1">
-        <button type="button" name="OK" onclick="hacer();">OK</button>
+        <h4>Secuencia de múltiplos de 3</h4>
+    
+        <button onclick="hacer();">empezamos!</button>
     
    </body>
 

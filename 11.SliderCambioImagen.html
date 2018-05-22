@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Slider</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <script>
+ 
+
+        function rojo ()
+        {
+            document.getElementById("imagen").src=("vestidorojo.jpg");
+        }
+
+        function negro ()
+        {
+            document.getElementById("imagen").src=("vestidonegro.png");
+        }
+
+        function play ()
+        {
+            setInterval(color,4000);
+        }
+
+        function stop ()
+        {
+            document.getElementById("imagen").src=("vestidoazul.png");
+        }
+        function color ()
+        {
+            var colorvestido = rojo;
+            
+        }
+
+
+    </script>
+</head>
+
+<body>
+
+    <img src="vestidoazul.png" style="max-width:400px; max-height: 400px" id="imagen">
+    <button onclick="rojo();" id= "rojo">Rojo</button>
+    <button onclick="negro();" id= "negro">Negro</button>
+    <button onclick="play();" id= "play">Play</button>
+    <button onclick="stop();" id= "stop">Stop</button>
+
+</body>
+
+</html>
