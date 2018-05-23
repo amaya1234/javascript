@@ -1,0 +1,35 @@
+<html>
+   <head>
+      <title>
+         P&aacute;gina con Javascript.
+      </title>
+      <script src="imc.js"></script>
+
+      <script language="javascript">
+        
+        function calcularIMC()
+        {
+            var peso = document.getElementById("peso").value;
+            var altura = document.getElementById("altura").value;
+            var persona = new Persona (peso,altura);
+            
+            var imc_string = persona.calcularIMC_l();
+            alert ("El IMC es: " + imc_string + " ." );
+            document.getElementById ("res").src = imc_string+".JPG";
+        }
+      </script>
+
+   </head>
+
+   <body>
+        <div style="float: right;"><img id= "res" style="max-width:200px;"></img>
+        </div><div><h4>Pon tu peso</h4>
+            <input type="text" id="peso">
+            <h4>Pon tu altura</h4>
+            <input type="text" id="altura">
+            <button onclick="calcularIMC();">Calcular IMC</button>
+        </div>
+        
+   </body>
+
+</html>

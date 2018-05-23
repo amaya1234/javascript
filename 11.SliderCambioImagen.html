@@ -7,16 +7,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <script>
- 
+        onload =inicio;
+        var array_fotos;
+        var elemento_imagen;
+        var num_foto_actual = 0;
+
+        function cambiaColor (evento)
+        {
+            console.log ("Cambio de foro");
+            console.log(evento.currentTarget.id);
+
+        }
+
+        inicio ()
+        {
+            array_fotos = new Array ();
+            array_fotos.push ("vestidorojo.jpg");
+            array_fotos.push ("vestidonegro.png");
+            array_fotos.push ("vestidoazul.png");
+            
+            document.getElementById("imagen_actual");
+            elemento_imagen.src = array_fotos [num_foto_actual];
+
+            var div1 = document.getElementById("rojo");
+            div1.addEventListener('click',cambiarColor);
+            var div2 = document.getElementById("negro");
+            div2.addEventListener('click',cambiarColor);
+        }
 
         function rojo ()
         {
-            document.getElementById("imagen").src=("vestidorojo.jpg");
+            document.getElementById("imagen_actual").src=("vestidorojo.jpg");
         }
 
         function negro ()
         {
-            document.getElementById("imagen").src=("vestidonegro.png");
+            document.getElementById("imagen_actual").src=("vestidonegro.png");
         }
 
         function play ()
@@ -26,7 +52,7 @@
 
         function stop ()
         {
-            document.getElementById("imagen").src=("vestidoazul.png");
+            document.getElementById("imagen_actual").src=("vestidoazul.png");
         }
         function color ()
         {
@@ -40,11 +66,19 @@
 
 <body>
 
-    <img src="vestidoazul.png" style="max-width:400px; max-height: 400px" id="imagen">
-    <button onclick="rojo();" id= "rojo">Rojo</button>
-    <button onclick="negro();" id= "negro">Negro</button>
-    <button onclick="play();" id= "play">Play</button>
-    <button onclick="stop();" id= "stop">Stop</button>
+    <div id="marco">
+        <div id="imagen">
+        <img src="vestidoazul.png" style="max-width:300px; max-height: 300px" id="imagen_actual">
+        </div>
+        <div id="rojo">
+                <button onclick="rojo();" id= "rojo"><img src="boton rojo.jpeg" style="max-width:30px";></button>
+        </div> <div id="negro">
+                <button onclick="negro();" id= "negro">Negro</button>
+        </div>
+        
+        <button onclick="play();" id= "play"><img src="play.png" style="max-width:30px";></button>
+        <button onclick="stop();" id= "stop">Stop</button>
+    </div>
 
 </body>
 

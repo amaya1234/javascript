@@ -5,15 +5,31 @@
         WEB CON JS
     </title>
     <link rel="stylesheet" type="text/css" href="estilo2.css">
+    <script src="easytimer.js"></script>
+    <script>
+        var timerInstance = new Timer();
+    </script>
+
     <script language="javascript">
         window.onload = iniciarTablero;
         var imagen_tocada = false;
-        var primer_img_tocada; var segunda_imagen_tocada;
+        var primer_img_tocada;
+        var segunda_imagen_tocada;
         var num_aciertos = 0;//representa el número de aciertos que lleva el usuario
         const TOTAL_ACIERTOS = 2;//número de aciertos totales para dar por concluido el juego
+        var abierto = true;
+
+        function actualizarReloj ()
+        {
+            timer.addEventListener('secondsUpdated', function (e) 
+            {
+                $('#basicUsage').html(timer.getTimeValues().toString());
+            }
+        }
 
         function iniciarTablero() {
             console.log("Inicia Tablero . . .");
+            var reloj = new Timer();
             //Asignar los listeners
             var td_actual;
             var hijo_img;
@@ -27,6 +43,9 @@
             }
             console.log("Fin Inicia Tablero . . .");
             //Ocultar las imágenes
+            reloj = new Timer();
+            reloj.start();
+
         }
 
         function tocadoImagen(evento) {
@@ -36,7 +55,7 @@
             // SI la imagen que ha tocado está visible --> no hago nada
             //si no, caso general
             var especial = evento.currentTarget.firstElementChild; //accedo a la imagen tocada
-            if (especial.style.visibility == 'hidden') {
+            if ((especial.style.visibility == 'hidden') && (abierto)) {
                 if (!imagen_tocada) //imagen_tocada es false
                 { //1er intento
                     //obtengo imagen
@@ -62,38 +81,51 @@
 
                     } else {
                         console.log("FALLO, las tapo");
-                        setTimeout(voltear, 1500);
+                        abierto = false;
+                        setTimeout(function () { voltear(primer_img_tocada, segunda_imagen_tocada) }, 900);
                     }
 
                 }
             }
         }
-        function voltear() {
-            primer_img_tocada.style.visibility = 'hidden';
-            segunda_imagen_tocada.style.visibility = 'hidden';
+        function voltear(primer_img_tocadal, segunda_imagen_tocadal) {
+            primer_img_tocadal.style.visibility = 'hidden';
+            segunda_imagen_tocadal.style.visibility = 'hidden';
+            abierto = true;
         }
     </script>
 </head>
 
 <body>
-    <table>
-        <tr>
-            <td>
-                <img src="delgado.jpeg">
-            </td>
-            <td>
-                <img src="pantera.jpg">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <img src="delgado.jpeg">
-            </td>
-            <td>
-                <img src="pantera.jpg">
-            </td>
-        </tr>
-    </table>
+    <div>
+        <table>
+            <tr>
+                <td>
+                    <img src="DELGADO.jpg">
+                </td>
+                <td>
+                    <img src="pantera.jpg">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="DELGADO.jpg">
+                </td>
+                <td>
+                    <img src="pantera.jpg">
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="chronoExample">
+        <div class="values">00:00:00</div>
+        <div>
+            <button class="startButton">Start</button>
+            <button class="pauseButton">Pause</button>
+            <button class="stopButton">Stop</button>
+            <button class="resetButton">Reset</button>
+        </div>
+    </div>
 </body>
 
 </html>
