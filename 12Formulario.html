@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<head>
+
+    <title>
+
+        P&aacute;gina con Javascript. Formulario.
+
+    </title>
+
+    <script language="javascript">
+
+        var xmlHttp = new XMLHttpRequest();
+        const DIR_SERV = "http://10.1.2.10:8080/appwebprofe/RegistrarPersona"
+
+        function procesarEventos()
+
+        {
+            console.log ("Procesar eventos invocado "+xmlHttp.readyState);
+            if(xmlHttp.readyState==4)
+            {
+                console.log(xmlHttp.responseText);
+            }
+        }
+
+
+        function enviaDatos()
+         {
+            var name = document.getElementById("nombre").value;
+            var age = document.getElementById("edad").value;
+
+
+            console.log("Nombre : " + nombre + " Edad : " + edad);
+
+            var persona = {
+                nombre: name,
+                edad: age,
+
+            };
+
+            alert("Persona intro = " + persona.nombre);
+            alert("Persona intro = " + persona.edad);
+
+
+            var persona_json = JSON.stringify(persona);
+            
+
+            console.log(persona_json);
+
+            //preparo la llamada AJAX
+
+            xmlHttp.onreadystatechange = procesarEventos;
+            xmlHttp.open('POST', DIR_SERV, true);//true es que es asincrono y DIR_SERV es la dirección 
+            xmlHttp.setRequestHeader('Content-Type', 'appliction/json');// application/jpg y Content type es tipo MiME
+            xmlHttp.send (persona_json);//El cuerpo del mensaje
+
+            return false;
+        }
+
+
+    </script>
+
+</head>
+
+<body><div>
+   
+    <h4>Formulario</h4>
+    <input type="text" id="nombre" value="Nombre" >
+    <br>
+    <br>
+    <input type="text" id="edad" value="Edad" >
+    <br>
+    <br>
+    <button type="submit" name="Enviar" onclick="enviaDatos();">Enviar</button>
+
+</div>
+</body>
+
+</html>
