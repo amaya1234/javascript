@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<meta charset="UTF-8"></meta>
+   <head>
+      <title>
+         P&aacute;gina con Javascript.
+      </title>
+      <script language="javascript">
+
+        var xmlHttp = new XMLHttpRequest();
+        var cancion;
+        var servidor = "https://itunes.apple.com/search?term="+cancion+"&media=music&limit=20";
+        var respuesta;
+
+
+        function enviarDatos()
+        {
+            xmlHttp.onreadystatechange = recogerDatos;
+            xmlHttp.open('GET', servidor, false);//true es que es asincrono y DIR_SERV es la dirección 
+            xmlHttp.setRequestHeader('Content-Type', 'appliction/json');// application/jpg y Content type es tipo MiME
+            xmlHttp.send (null);//El cuerpo del mensaje   
+            respuesta = xmlHttp.responseText;
+            
+            console.log (respuesta);
+        }
+
+        function recogerDatos()
+        {
+            console.log (respuesta);
+        }
+
+        function Buscar()
+        {
+            cancion = document.getElementById("cancion").value;
+            
+            console.log ("canción = " + cancion);
+            enviarDatos();
+        }
+
+      </script>
+   </head>
+   <body>
+       <h4>API iTUNES</h4>
+       <h2>Busca una canción</h2>
+        <input type="text" id="cancion">
+        <button type="button" name="Buscar" onclick="Buscar();">Buscar</button>
+   </body>
+</html>

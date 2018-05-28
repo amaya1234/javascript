@@ -11,6 +11,7 @@
 
         var xmlHttp = new XMLHttpRequest();
         const DIR_SERV = "http://10.1.2.10:8080/appwebprofe/ObtenerClave"
+        const SERV_RESP = "http://10.1.2.10:8080/appwebprofe/EnviarMensaje"
         onload = cogerClave;
         var clave;
         var original; 
@@ -18,11 +19,10 @@
 
           function cogerClave ()
           {
-            xmlHttp.open('GET', DIR_SERV, true);//true es que es asincrono y DIR_SERV es la dirección 
+            xmlHttp.open('GET', DIR_SERV, false);//true es que es asincrono y DIR_SERV es la dirección 
             xmlHttp.setRequestHeader('Content-Type', 'appliction/json');// application/jpg y Content type es tipo MiME
             xmlHttp.send (null);//El cuerpo del mensaje
-            clave = xmlHttp.responseText;
-            clave = parseInt(clave);
+            clave = parseInt(xmlHttp.responseText);
           }
 
             //xmlHttp.onreadystatechange = procesarEventos;
@@ -36,21 +36,22 @@
             for (var indice=0;indice<longitud_mo;indice=indice+1)
             {
                 letra_actual = mensaje_original.charAt(indice);
-                codigo_letra = mensaje_original.charCodeAt(indice) + parseInt(clave);
+                codigo_letra = parseInt(mensaje_original.charCodeAt(indice)) + parseInt(clave);
                 encriptado = encriptado + codigo_letra;
             }
             return encriptado;
         }
         function recogerTexto() {
 
-            var original = document.getElementById("original").value;
-            var m_encriptado = encriptar(original);
+            original = document.getElementById("original").value;
+            m_encriptado = encriptar(original);
             document.getElementById("codificado").value = m_encriptado;
         }
 
         function procesarEventos()
         {
             console.log ("Procesar eventos invocado " + xmlHttp.readyState);
+            // si está completo y ha ido bien, accedo al cuerpo
             if (xmlHttp.readyState==4)
             {
                 console.log (xmlHttp.responseText);
@@ -67,38 +68,31 @@
         }
         function enviaDatos()
          {
-
             console.log("Mensaje oginal : " + original + " mensaje encriptado : " + m_encriptado + " clave : " + clave);
 
             var datos = {
-                mensaje_original : men_original,
-                mensaje_encriptado : men_encriptado,
-                mensaje_clave : men_clave,
+                mensaje_original : original,
+                mensaje_cifrado : m_encriptado,
+                clave : clave,
             };
             var datos_json = JSON.stringify(datos);
-
             console.log(datos_json);
 
             //preparo la llamada AJAX
 
-            //xmlHttp.onreadystatechange = enviaDatos;
-            xmlHttp.open('POST', DIR_SERV, true);//true es que es asincrono y DIR_SERV es la dirección 
+            xmlHttp.onreadystatechange = procesarEventos;
+            xmlHttp.open('POST', SERV_RESP, true);//true es que es asincrono y DIR_SERV es la dirección 
             xmlHttp.setRequestHeader('Content-Type', 'appliction/json');// application/jpg y Content type es tipo MiME
-            xmlHttp.send (datos_json);//El cuerpo del mensaje
-
+            xmlHttp.send (datos_json);//El cuerpo del mensaje   
         }
+
       </script>
-
    </head>
-
    <body>
        <h4>Cifrado AJAX</h4>
-     
             <textarea name="texto_original" id="original" cols="50" rows="14"></textarea>
             <button onclick="recogerTexto();">Codificar </button>
             <textarea name="texto_codificado" id="codificado" cols="50" rows="14"></textarea>
             <button onclick="enviaDatos();">Enviar </button>
-        </body>
-
-
+    </body>
 </html>
