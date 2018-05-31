@@ -1,47 +1,109 @@
 <!DOCTYPE html>
 <meta charset="UTF-8"></meta>
-   <head>
-      <title>
-         P&aacute;gina con Javascript.
-      </title>
-      <script language="javascript">
+
+<head>
+    <title>
+        P&aacute;gina con Javascript.
+    </title>
+    <script language="javascript">
 
         var xmlHttp = new XMLHttpRequest();
-        var cancion;
-        var servidor = "https://itunes.apple.com/search?term="+cancion+"&media=music&limit=20";
-        var respuesta;
+        var l_canciones;//string
+
+        function recogerDatos() {
+            if (xmlHttp.readyState == 4) {
+                l_canciones = JSON.parse(xmlHttp.responseText);//Desserializar
+                console.log(l_canciones);
+
+                var num_canciones = l_canciones.resultCount;
+                var resultado = l_canciones.results;
+                var artista = "";
+                var id = 0;
+                var url100 = "";
+                var precio;
+                var moneda = "";
+                var vista_previa = "";
+                var tabla;
+                var nueva_fila;
+                var columna;
 
 
-        function enviarDatos()
+                for (var i = 0; i < num_canciones; i++) {
+                    artista = resultado[i].artistName;
+                    
+                    tabla = document.getElementById("tabla");//obtengo referencia a la tabla
+                    nueva_fila = document.createElement("TR");//creo la fila
+                    columna = document.createElement("TD");//creo la columna
+                    columna.innerHTML = ("<p>" + artista + "</p>");//pongo el texto a la columna
+                    nueva_fila.appendChild(columna);//añado la columna a la fila
+                    columna.appendChild(nueva_fila);//añado la fila a la columna
+
+                    id = resultado[i].trackId;
+                    nueva_fila.appendChild(columna);
+                    columna.innerHTML = ("<p>" + id + "</p>");
+                    insertarFila(id);//tiene que ser hidden
+
+                    url100 = resultado[i].artworkUrl100;
+                    insertarFila(url100);//esto esuna img
+
+                    precio = parseFloat(resultado[i].trackPrice);
+                    insertarFila(precio);//esto es un float
+
+                    moneda = resultado[i].currency;
+                    insertarFila(moneda);
+
+                    vista_previa = resultado[i].previewUrl;
+                    insertarFila(vista_previa);//esto es un audio
+                }
+            }
+        }
+        /*function insertarFila(texto1) {
+            var texto1;
+            var tabla = document.getElementById("tabla");//obtengo referencia a la tabla
+            var nueva_fila = document.createElement("TR");//creo la fila
+            var columna = document.createElement("TD");//creo la columna
+            columna.innerHTML = ("<p>" + texto1 + "</p>");//pongo el texto a la columna
+
+            nueva_fila.appendChild(columna);//añado la columna a la fila
+            tabla.appendChild(nueva_fila);//añado la fila a la columna
+        }
+        unction insertarColumna(texto2)
         {
+            var texto2;
+            var tabla = document.getElementById("tabla");
+            var fila = tabla.getElementsByTagName("tr");
+            var nueva_columna = fila.createElement("TD");
+            nueva_columna.innerHTML =  ("<p>" + texto2 + "</p>");//pongo el texto a la columna
+            nueva_columna.appendChild(nueva_columna);
+        }
+        */
+
+        function buscar() {
+            var cancion = document.getElementById("cancion").value;
+            console.log("canción = " + cancion);
             xmlHttp.onreadystatechange = recogerDatos;
-            xmlHttp.open('GET', servidor, false);//true es que es asincrono y DIR_SERV es la dirección 
+            var servidor = "https://itunes.apple.com/search?term=" + cancion + "&media=music&limit=20";
+            xmlHttp.open('GET', servidor, true);//true es que es asincrono y DIR_SERV es la dirección 
             xmlHttp.setRequestHeader('Content-Type', 'appliction/json');// application/jpg y Content type es tipo MiME
-            xmlHttp.send (null);//El cuerpo del mensaje   
-            respuesta = xmlHttp.responseText;
-            
-            console.log (respuesta);
+            xmlHttp.send(null);//El cuerpo del mensaje 
         }
+    </script>
+</head>
 
-        function recogerDatos()
-        {
-            console.log (respuesta);
-        }
-
-        function Buscar()
-        {
-            cancion = document.getElementById("cancion").value;
-            
-            console.log ("canción = " + cancion);
-            enviarDatos();
-        }
-
-      </script>
-   </head>
-   <body>
-       <h4>API iTUNES</h4>
-       <h2>Busca una canción</h2>
+<body>
+    <div>
+        <h4>API iTUNES</h4>
+        <h2>Busca una canción</h2>
         <input type="text" id="cancion">
-        <button type="button" name="Buscar" onclick="Buscar();">Buscar</button>
-   </body>
+        <button type="button" name="Buscar" onclick="buscar();">Buscar</button>
+    </div>
+    <div></div>
+    <div>
+        <table id=tabla>
+            <hr>
+            <td>Autor</td><td></td><td>Imagen</td><td>Precio</td><td>Moneda</td><td>Escuchar</td>
+        </table>
+    </div>
+</body>
+
 </html>
