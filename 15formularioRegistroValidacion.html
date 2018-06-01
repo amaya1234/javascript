@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<meta charset="UTF-8"></meta>
+
+<head>
+    <title>
+        P&aacute;gina con Javascript.
+    </title>
+    <script language="javascript">
+        var xmlHttp = new XMLHttpRequest();
+        const DIR_SERV = "http://10.1.2.10:8080/appwebprofe/Login";
+
+        const EXPRESION_REGULAR_USUARIO_MAIL = /^\w{2,}$/; //El mail y el usuario deben tener al menos 6 caracteres formado por letras, números o guiones bajos
+        const EXPRESION_REGULAR_EMAIL = /^\w+([\.\+\-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
+        const EXPRESION_REGULAR_WEB = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+        const EXPRESION_REGULAR_TELEFONO = /^\+\d{7,15}$/;
+        const EXPRESION_REGULAR_PWD = /^\w{6,15}$/;
+
+        var usuario;
+        var email;
+        var telefono;
+        var pwd;
+        var pwd1;
+        var pwd2;
+
+        function enviar() {
+            usuario = document.getElementById("usuario").value;
+            email = document.getElementById("email").value;
+            telefono = document.getElementById("telefono").value;
+            pwd1 = document.getElementById("pwd1").value;
+            pwd2 = document.getElementById("pwd2").value;
+            var es_valido = validar();
+            if (es_valido) {
+
+                var passw_iguales = confirmar();
+                if (passw_iguales) {
+
+                    var datos_enviados = enviarDatos();
+
+                    if (datos_enviados) {
+                        console.log("enviado con éxito");
+                    }
+                }
+                else {
+                    console.log("No ha sido confirmado");
+                }
+
+            } else {
+                console.log("No ha sido validado");
+            }
+
+        }
+
+        function limpiar() {
+            var limpiar = "";
+            document.getElementById("usuario").value = limpiar;
+            document.getElementById("email").value = limpiar;
+            document.getElementById("teledono").value = limpiar;
+            document.getElementById("pw1").value = limpiar;
+            document.getElementById("pw2").value = limpiar;
+
+            console.log("limpiado con éxito");
+
+        }
+        function validar() {
+            var validacion=false;
+            var patron_usuario = new RegExp(EXPRESION_REGULAR_USUARIO_MAIL);
+            var patron_mail = new RegExp(EXPRESION_REGULAR_EMAIL);
+            //var patron_anuncio = new RegExp(EXPRESION_REGULAR_WEB);
+            var patron_telefono = new RegExp(EXPRESION_REGULAR_TELEFONO);
+
+            var usuario_val = patron_usuario.test(usuario);
+            var correo_val = patron_mail.test(email);
+            //var anuncio_val = patron_anuncio.test(anuncio);
+            var telefono_val = patron_telefono.test(telefono);
+
+            if (usuario_val) {
+                if(correo_val)
+                {
+                    if(telefono_val)
+                    {
+                        validacion = true;
+                    }else{
+                        console.log("El teléfono no es válido");
+                    }
+                }else{
+                    console.log("El correo no es válido");
+                }
+            }
+            else{
+                console.log("El nombre de usuario no es válido");
+            }
+            return validacion;
+        }
+        function confirmar() {
+            var confirmacion = false;
+            if (pwd1 == pwd2) {
+
+                confirmacion = true;
+            }
+            console.log("confirmado el pwd con éxito");
+            return confirmacion;
+        }
+        function enviarDatos() {
+            console.log("Nombre : " + usuario + " Email : " + email + " Contraseña : " + pwd1);
+
+            var datos = {
+                usuario: usuario,
+                email: email,
+                telefono: telefono,
+                pwd: pwd,
+            };
+            var datos_json = JSON.stringify(datos);
+            console.log(datos_json);
+
+            //preparo la llamada AJAX
+            xmlHttp.onreadystatechange = recogerRespuesta;
+            xmlHttp.open('POST', DIR_SERV, true);//true es que es asincrono y DIR_SERV es la dirección 
+            xmlHttp.setRequestHeader('Content-Type', 'appliction/json');// application/jpg y Content type es tipo MiME
+            xmlHttp.send(datos_json);//El cuerpo del mensaje   
+
+            var envio = true;
+
+            return envio;
+        }
+        function recogerRespuesta() {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                console.log("Enviado con éxito status 200 Recogida la respuesta");
+            }
+
+        }
+    </script>
+
+</head>
+
+<body>
+    <h4>FORMULARIO DE REGISTRO</h4>
+    <form name="formulario">
+        <label for="usuario">NOMBRE:</label>
+        <input type="text" id="usuario">
+        <br>
+        <br>
+
+        <label for="email">EMAIL:</label>
+        <input type="email" id="email">
+        <br>
+        <br>
+
+        <label for="telefono">TELÉFONO:</label>
+        <input type="tel" id="telefono">
+        <br>
+        <br>
+
+        <label for="pwd1">CONTRASEÑA:</label>
+        <input type="password" id="pwd1" min="6">
+        <br>
+        <br>
+
+        <label for="pwd2">CONFIRMAR CONTASEÑA:</label>
+        <input type="password" id="pwd2" min="6">
+    </form>
+    <input type="submit" name="Enviar" onclick="enviar();">
+    <button type="button" name="borrar" onclick="limpiar();">Borrar</button>
+
+</body>
+
+</html>
