@@ -54,7 +54,7 @@
             var limpiar = "";
             document.getElementById("usuario").value = limpiar;
             document.getElementById("email").value = limpiar;
-            document.getElementById("teledono").value = limpiar;
+            document.getElementById("telefono").value = limpiar;
             document.getElementById("pw1").value = limpiar;
             document.getElementById("pw2").value = limpiar;
 
@@ -73,7 +73,8 @@
             //var anuncio_val = patron_anuncio.test(anuncio);
             var telefono_val = patron_telefono.test(telefono);
 
-            if (usuario_val) {
+            if (usuario_val) 
+            {
                 if(correo_val)
                 {
                     if(telefono_val)
@@ -115,7 +116,7 @@
             //preparo la llamada AJAX
             xmlHttp.onreadystatechange = recogerRespuesta;
             xmlHttp.open('POST', DIR_SERV, true);//true es que es asincrono y DIR_SERV es la dirección 
-            xmlHttp.setRequestHeader('Content-Type', 'appliction/json');// application/jpg y Content type es tipo MiME
+            xmlHttp.setRequestHeader('Content-Type', 'appliction/json;charset=UTF-8');// application/jpg y Content type es tipo MiME
             xmlHttp.send(datos_json);//El cuerpo del mensaje   
 
             var envio = true;

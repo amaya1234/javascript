@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<meta charset="UTF-8"></meta>
+
+<head>
+    <title>
+
+        P&aacute;gina con Javascript.
+
+    </title>
+
+    <script language="javascript">
+
+        var xmlHttp = new XMLHttpRequest();
+        var xmlHttp2 = new XMLHttpRequest();
+        var departamentos="";//string que lleva una tabla
+      
+
+        const DIR_SERV1="http://10.1.2.10:8080/appwebprofe/CargaMenuSelect";
+        const URL_TRABAJADORES = "http://10.1.2.10:8080/appwebprofe/CargarTrabajadores?dpto=";
+        
+        onload=iniciar;
+
+        function iniciar() {
+            
+                    xmlHttp.onreadystatechange = recogerDatos;
+                    xmlHttp.open('GET', DIR_SERV1, true);
+                    xmlHttp.setRequestHeader('Content-Type', 'appliction/json;charset=UTF-8');// application/jpg y Content type es tipo MiME
+                    xmlHttp.send(null);
+                }
+
+        function recogerDatos() {
+            
+            if (xmlHttp.readyState == 4 && xmlHttp.status ==200) 
+            {
+                departamentos = JSON.parse(xmlHttp.responseText);//Desserializar
+                console.log(departamentos);
+
+                var numero;
+                var depto;
+                var num_dept= departamentos.length;
+                
+                var seleccion = document.getElementById("departamentos");
+                var opcion;
+
+                for (var i = 0; i < num_dept; i++) {
+                      
+                    opcion = document.createElement("OPTION");
+                    opcion.value = departamentos[i].numero;
+                    opcion.innerHTML = departamentos[i].nombre;
+                    seleccion.appendChild(opcion);
+                }
+                //Ahora se selecciona una opción de la que hemos creado
+            }
+        }
+        function cargarTrabajadores() {
+                
+                var seleccion = document.getElementById("departamentos");
+                var idDptoSeleccionado = seleccion.options[seleccion.selectedIndex].value;
+                if (idDptoSeleccionado != "XX") {
+                    console.log("el dpto seleccionado es " + idDptoSeleccionado);
+                    // Preparo la llamada
+                    xmlHTTP2.onreadystatechange = procesarTrabajadores;
+                    // paramentros de open (metodo a usar, servicio que se llama, esAsincrono)
+                    xmlHTTP2.open('GET', URL_TRABAJADORES + idDptoSeleccionado, true);
+                    //xmlHTTP.setRequestHeader('Content-Type', 'application/json');
+                    xmlHTTP2.send(null);
+                }
+            } 
+
+            function procesarTrabajadores() {
+                var estado = xmlHTTP2.readyState;
+                console.log("procesar evento invocado " + estado);
+                var lstTrabajadores;
+                // cuando estado = 4 procesamos el mensaje HTTP de respuesta
+                if (estado == 4 &&  xmlHTTP2.status==200) {
+                    lstTrabajadores = JSON.parse(xmlHTTP2.responseText);
+                    console.log(lstTrabajadores);
+                    cargarSelectTrabajadores(lstTrabajadores); 
+                }
+            }
+
+            function cargarSelectTrabajadores(lstTrabajadores) {
+                var selectTrabajadores = document.getElementById("trabajadores");
+                // vaciamos el select antes de cargar los nuevos elementos
+                while (selectTrabajadores.firstChild) {
+                    selectTrabajadores.removeChild(selectTrabajadores.firstChild);
+                }
+                var opcion;
+                for (i = 0; i < lstTrabajadores.length; i++) {
+                    opcion = document.createElement("OPTION");
+                    opcion.innerHTML = lstTrabajadores[i].nombre;
+                    selectTrabajadores.appendChild(opcion);
+                }
+            }
+
+    </script>
+
+</head>
+
+<body>
+    <h4>Secciona un departamento</h4>
+    <select id ="departamentos" onchange="cargarTrabajadores();"></select>
+    <select id ="trabajadores"></select>
+    
+
+</body>
+
+</html>

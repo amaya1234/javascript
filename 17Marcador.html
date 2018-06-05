@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<head>
+<meta charset="UTF-8"></meta>
+    <title>
+        P&aacute;gina con Javascript. Formulario.
+    </title>
+    <script language="javascript">
+
+        var xmlHttp = new XMLHttpRequest();
+        const DIR_SERV = "http://10.1.2.10:8080/Marcador/ActualizarInfoPartido";
+        
+        onload=actualizarMarcador;
+
+        function actualizarMarcador()
+        {
+            console.log ("Actualizar marcador invocado "+xmlHttp.readyState);
+            //preparo la llamada AJAX
+            xmlHttp.onreadystatechange=procesarDatos;
+            xmlHttp.open('GET', DIR_SERV, true);//true es que es asincrono y DIR_SERV es la dirección 
+            xmlHttp.setRequestHeader('Content-Type', 'appliction/json');// application/jpg y Content type es tipo MiME
+            xmlHttp.send (null);//El cuerpo del mensaje
+            console.log ("Actualizar marcador : "+xmlHttp.readyState);
+        }
+
+        function procesarDatos()
+         {
+            var infoPartido;
+            if(xmlHttp.readyState==4 && xmlHttp.status==200)
+            {
+                console.log ("Entra en el if de status 200");
+                console.log(xmlHttp.responseText);
+                infoPartido = JSON.parse(xmlHttp.responseText);//Desserializar
+                console.log(infoPartido);
+            }
+            
+            var goles_local=inforPartido.marcador.goles_local;
+            var goles_visitante=infoPArtido.marcador.goles_visitante;
+            
+            var listaComentarios=infoPartido.listaComentarios;
+            var minuto_texto=document.getElementById("minuto");
+            var comentario_texto=document.getElementById("comentario");
+
+            var fotopartido="http://10.1.2.10:8080/Marcador/"+infoPartido.fotopartido;
+            var ponerFoto=document.getElementById("fotopartido");
+            ponerFoto.setAttribute("src","fotopartido");
+
+            document.getElementById("golesLocal")=goles_local;
+            document.getElementById("golesVisitante")=goles_visitante;
+            
+            for (var i = 0; i < listaComentarios.length; i++) {
+                      
+                minuto_texto.innerText = listaComentarios[i].minuto;
+                comentario_texto.innerText= listaComentarios[i].comentario;
+                console.log("Minuto : " + minuto + " Comentario : " + comentario);
+            }
+            //actualizarMarcador();
+        }
+        
+    </script>
+</head>
+<body><div>
+    <h4>MARCADOR</h4>
+    <input type="text" id="golesLocal" value="Goles_Local" ><input type="text" id="golesVisitante" value="Goles_Visitante" >
+    <br><img id="foto" src="futbol.jpg" style="max-width: 600px; max-height: 600px;" ><br>
+    <input type="text" id="parrafo" >
+    <p id="minuto" ></p>
+    <p id="comentario" ></p><br>
+    <img id= "fotopartido" src="">
+</div>
+</body>
+
+</html>
